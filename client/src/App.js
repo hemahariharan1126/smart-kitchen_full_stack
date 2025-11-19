@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
-// Base URL for the live Render API
+// Base URL for the live Render API (Ensure this matches your live URL)
 const API_BASE_URL = 'https://smart-kitchen-full-stack.onrender.com/api';
 
 function App() {
@@ -12,10 +12,8 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [view, setView] = useState('search'); 
 
-  
   const fetchRecipes = async () => {
     try {
-      // Calls the LIVE Render API
       const response = await axios.get(`${API_BASE_URL}/recipes`, { 
         params: { ingredients, cuisine }
       });
@@ -27,27 +25,24 @@ function App() {
     }
   };
 
-  
   const saveRecipe = async (recipe) => {
     const userNote = prompt("Add a note? (e.g. 'Spicy!')");
     try {
-      // Calls the LIVE Render API
       await axios.post(`${API_BASE_URL}/favorites`, {
         title: recipe.title,
         image: recipe.image,
         ingredients: recipe.extendedIngredients, 
         note: userNote
       });
-      alert("Saved! 😋");
+      alert("Recipe saved successfully! 😋");
     } catch (error) {
       console.error("Error saving:", error);
+      alert("Failed to save recipe.");
     }
   };
 
-  
   const fetchFavorites = async () => {
     try {
-      // Calls the LIVE Render API
       const response = await axios.get(`${API_BASE_URL}/favorites`);
       setFavorites(response.data);
     } catch (error) {
@@ -55,14 +50,13 @@ function App() {
     }
   };
 
-  
   const deleteRecipe = async (id) => {
     try {
-      // Calls the LIVE Render API
       await axios.delete(`${API_BASE_URL}/favorites/${id}`);
       setFavorites(favorites.filter((r) => r._id !== id));
     } catch (error) {
       console.error("Error deleting:", error);
+      alert("Failed to delete recipe.");
     }
   };
 
@@ -75,9 +69,14 @@ function App() {
     <div className="App">
       <h1>👨‍🍳 Smart Kitchen 👩‍🍳</h1>
       
+      {/* Navigation Buttons using nav-btn class */}
       <div style={{ marginBottom: '30px' }}>
-        <button className="nav-btn" onClick={() => setView('search')}>🔍 Search</button>
-        <button className="nav-btn" onClick={switchToFavorites}>📖 My Cookbook</button>
+        <button className="nav-btn" onClick={() => setView('search')}>
+          🔍 Search
+        </button>
+        <button className="nav-btn" onClick={switchToFavorites}>
+          📖 My Cookbook
+        </button>
       </div>
 
       {view === 'search' && (
@@ -97,6 +96,7 @@ function App() {
             <option value="Chinese">Chinese 🇨🇳</option>
           </select>
 
+          {/* Search button using search-btn class */}
           <button className="search-btn" onClick={fetchRecipes}>Find Recipes</button>
         </div>
       )}
@@ -104,7 +104,7 @@ function App() {
       <div className="recipe-grid">
         {view === 'search' ? (
           recipes.map((recipe) => (
-            <div key={recipe.id} className="recipe-card">
+            <div key={recipe.id} className="recipe-card"> {/* Card Class Applied */}
               <img src={recipe.image} alt={recipe.title} />
               <h3>{recipe.title}</h3>
               
@@ -117,16 +117,25 @@ function App() {
                 </ol>
               </details>
 
-              <button className="save-btn" onClick={() => saveRecipe(recipe)}>❤️ Save</button>
+              {/* Save button using save-btn class */}
+              <button className="save-btn" onClick={() => saveRecipe(recipe)}>
+                ❤️ Save Recipe
+              </button>
             </div>
           ))
         ) : (
           favorites.map((recipe) => (
-            <div key={recipe._id} className="recipe-card">
+            <div key={recipe._id} className="recipe-card"> {/* Card Class Applied */}
               <img src={recipe.image} alt={recipe.title} />
               <h3>{recipe.title}</h3>
+              
+              {/* Note display using note-text class */}
               {recipe.note && <p className="note-text">"{recipe.note}"</p>}
-              <button className="delete-btn" onClick={() => deleteRecipe(recipe._id)}>🗑️ Delete</button>
+              
+              {/* Delete button using delete-btn class */}
+              <button className="delete-btn" onClick={() => deleteRecipe(recipe._id)}>
+                🗑️ Delete
+              </button>
             </div>
           ))
         )}
