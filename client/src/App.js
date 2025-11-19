@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
+// Base URL for the live Render API
+const API_BASE_URL = 'https://smart-kitchen-full-stack.onrender.com/api';
+
 function App() {
   const [ingredients, setIngredients] = useState('');
-  const [cuisine, setCuisine] = useState(''); // New State for Cuisine
+  const [cuisine, setCuisine] = useState(''); 
   const [recipes, setRecipes] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [view, setView] = useState('search'); 
@@ -12,7 +15,8 @@ function App() {
   
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/recipes', {
+      // Calls the LIVE Render API
+      const response = await axios.get(`${API_BASE_URL}/recipes`, { 
         params: { ingredients, cuisine }
       });
       console.log("Server Response:", response.data); 
@@ -27,7 +31,8 @@ function App() {
   const saveRecipe = async (recipe) => {
     const userNote = prompt("Add a note? (e.g. 'Spicy!')");
     try {
-      await axios.post('http://localhost:5000/api/favorites', {
+      // Calls the LIVE Render API
+      await axios.post(`${API_BASE_URL}/favorites`, {
         title: recipe.title,
         image: recipe.image,
         ingredients: recipe.extendedIngredients, 
@@ -42,7 +47,8 @@ function App() {
   
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/favorites');
+      // Calls the LIVE Render API
+      const response = await axios.get(`${API_BASE_URL}/favorites`);
       setFavorites(response.data);
     } catch (error) {
       console.error("Error fetching favorites:", error);
@@ -52,7 +58,8 @@ function App() {
   
   const deleteRecipe = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/favorites/${id}`);
+      // Calls the LIVE Render API
+      await axios.delete(`${API_BASE_URL}/favorites/${id}`);
       setFavorites(favorites.filter((r) => r._id !== id));
     } catch (error) {
       console.error("Error deleting:", error);
@@ -82,7 +89,6 @@ function App() {
             onChange={(e) => setIngredients(e.target.value)}
           />
           
-          {/* New Cuisine Selector */}
           <select value={cuisine} onChange={(e) => setCuisine(e.target.value)} className="cuisine-select">
             <option value="">Any Cuisine</option>
             <option value="Indian">Indian 🇮🇳</option>
