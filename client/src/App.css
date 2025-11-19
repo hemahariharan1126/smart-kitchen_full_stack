@@ -1,9 +1,9 @@
 /* 1. Global & Typography */
 body {
-  background-color: #fcfcfc; /* Very light, clean background */
-  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f3f0; /* Soft, warm off-white background */
+  font-family: 'Georgia', 'Times New Roman', Times, serif; /* More classic, inviting font */
   margin: 0;
-  color: #333;
+  color: #383a3a;
 }
 
 .App {
@@ -11,114 +11,136 @@ body {
   padding: 40px 20px;
 }
 
-h1 {
-  color: #336644; /* Deep Olive Green */
-  margin-bottom: 40px;
-  font-size: 2.5rem;
-  font-weight: 700;
+/* 2. Header / Branding Area */
+.app-header {
+    background-color: #ffffff; /* Clean header background */
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
 }
 
-/* 2. Search & Input Area */
+h1 {
+  color: #a0522d; /* Warm Terracotta/Brown for a rustic feel */
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* 3. Search & Input Area */
 .search-box {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 40px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 15px;
+  margin: 20px auto 40px;
+  max-width: 900px;
+  flex-wrap: wrap;
 }
 
 input, .cuisine-select {
   padding: 12px 20px;
-  border: 1px solid #e0e0e0; /* Light border for modern feel */
-  border-radius: 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Softer rounding */
   font-size: 16px;
-  outline: none;
-  transition: border-color 0.3s;
+  flex-grow: 1;
+  max-width: 300px;
 }
 
-input:focus {
-  border-color: #336644; /* Highlight input on focus */
-}
-
-/* 3. Button Styling (The professional touch) */
+/* 4. Button Styling (Toned down primary colors) */
 button {
-  padding: 10px 20px;
+  padding: 12px 25px;
   border: none;
-  border-radius: 25px;
-  font-weight: 600;
+  border-radius: 8px; 
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
 button:hover {
-  transform: translateY(-2px); /* Subtle lift */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Deeper shadow on hover */
 }
 
 .nav-btn {
-  background-color: transparent;
-  color: #336644;
-  border: 1px solid #336644;
-  margin: 0 8px;
+  background-color: #e0e0e0; /* Neutral background for nav */
+  color: #383a3a;
+  border: 1px solid #ccc;
+  margin: 0 10px;
 }
 
 .search-btn {
-  background-color: #e67e22; /* Warm Accent Orange */
+  background-color: #a0522d; /* Terracotta Primary */
   color: white;
 }
 
 .save-btn {
-  background-color: #336644; /* Primary Green */
+  background-color: #4a9075; /* Soft, professional green */
   width: 100%;
-  margin-top: 10px;
+  margin-top: 15px;
   color: white;
 }
 
 .delete-btn {
-  background-color: #c0392b; /* Deep Red for destructive action */
+  background-color: #e74c3c; 
   width: 100%;
-  margin-top: 10px;
+  margin-top: 15px;
   color: white;
 }
 
-/* 4. Recipe Grid & Cards */
+/* 5. Recipe Grid & Cards - The visual focus */
 .recipe-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   max-width: 1200px;
-  margin: 40px auto 0;
+  margin: 0 auto;
 }
 
 .recipe-card {
   background: white;
-  border-radius: 15px;
+  border-radius: 12px;
   overflow: hidden;
-  /* Key professional touch: prominent but soft shadow */
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08); 
-  transition: transform 0.3s ease;
+  /* Soft, elevated look */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 15px;
+  text-align: left; /* Text alignment on card */
+}
+
+.card-image-container {
+    height: 200px;
+    overflow: hidden;
 }
 
 .recipe-card img {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  transition: transform 0.5s;
+}
+
+.recipe-card img:hover {
+    transform: scale(1.05); /* Image zoom on hover */
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+  font-size: 1.4rem;
+  color: #a0522d;
+  margin-top: 0;
 }
 
 .note-text {
-  background-color: #fdf5e6; /* Very light accent yellow */
+  background-color: #fdf5e6; 
   border-left: 4px solid #e67e22;
   padding: 10px;
-  border-radius: 5px;
-  font-size: 0.95rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
   font-style: italic;
   color: #6e4414;
+  margin-top: 15px;
 }

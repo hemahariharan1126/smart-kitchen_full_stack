@@ -17,11 +17,10 @@ function App() {
       const response = await axios.get(`${API_BASE_URL}/recipes`, { 
         params: { ingredients, cuisine }
       });
-      console.log("Server Response:", response.data); 
       setRecipes(response.data);
     } catch (error) {
       console.error("Error fetching recipes:", error);
-      alert("Something went wrong. Check server terminal.");
+      alert("Something went wrong with the recipe search.");
     }
   };
 
@@ -67,16 +66,15 @@ function App() {
 
   return (
     <div className="App">
-      <h1>👨‍🍳 Smart Kitchen 👩‍🍳</h1>
       
-      {/* Navigation Buttons using nav-btn class */}
+      {/* NEW: Branding Header */}
+      <div className="app-header">
+          <h1>Culinary Coder 🍳</h1>
+      </div>
+      
       <div style={{ marginBottom: '30px' }}>
-        <button className="nav-btn" onClick={() => setView('search')}>
-          🔍 Search
-        </button>
-        <button className="nav-btn" onClick={switchToFavorites}>
-          📖 My Cookbook
-        </button>
+        <button className="nav-btn" onClick={() => setView('search')}>🔍 Search</button>
+        <button className="nav-btn" onClick={switchToFavorites}>📖 My Cookbook</button>
       </div>
 
       {view === 'search' && (
@@ -96,7 +94,6 @@ function App() {
             <option value="Chinese">Chinese 🇨🇳</option>
           </select>
 
-          {/* Search button using search-btn class */}
           <button className="search-btn" onClick={fetchRecipes}>Find Recipes</button>
         </div>
       )}
@@ -104,38 +101,39 @@ function App() {
       <div className="recipe-grid">
         {view === 'search' ? (
           recipes.map((recipe) => (
-            <div key={recipe.id} className="recipe-card"> {/* Card Class Applied */}
-              <img src={recipe.image} alt={recipe.title} />
-              <h3>{recipe.title}</h3>
-              
-              <details style={{margin: '10px 0', textAlign: 'left', color: '#555'}}>
-                <summary style={{cursor: 'pointer', fontWeight: 'bold'}}>📝 View Instructions</summary>
-                <ol style={{paddingLeft: '20px', marginTop: '10px'}}>
-                  {recipe.analyzedInstructions?.[0]?.steps.map((step) => (
-                    <li key={step.number} style={{marginBottom: '5px'}}>{step.step}</li>
-                  )) || <p>No instructions available.</p>}
-                </ol>
-              </details>
+            <div key={recipe.id} className="recipe-card">
+              <div className="card-image-container"> {/* Image Container for hover effect */}
+                  <img src={recipe.image} alt={recipe.title} />
+              </div>
+              <div className="card-content">
+                  <h3>{recipe.title}</h3>
+                  
+                  <details style={{margin: '10px 0', textAlign: 'left', color: '#555'}}>
+                    <summary style={{cursor: 'pointer', fontWeight: 'bold'}}>📝 View Instructions</summary>
+                    <ol style={{paddingLeft: '20px', marginTop: '10px'}}>
+                      {recipe.analyzedInstructions?.[0]?.steps.map((step) => (
+                        <li key={step.number} style={{marginBottom: '5px'}}>{step.step}</li>
+                      )) || <p>No instructions available.</p>}
+                    </ol>
+                  </details>
 
-              {/* Save button using save-btn class */}
-              <button className="save-btn" onClick={() => saveRecipe(recipe)}>
-                ❤️ Save Recipe
-              </button>
+                  <button className="save-btn" onClick={() => saveRecipe(recipe)}>❤️ Save Recipe</button>
+              </div>
             </div>
           ))
         ) : (
           favorites.map((recipe) => (
-            <div key={recipe._id} className="recipe-card"> {/* Card Class Applied */}
-              <img src={recipe.image} alt={recipe.title} />
-              <h3>{recipe.title}</h3>
-              
-              {/* Note display using note-text class */}
-              {recipe.note && <p className="note-text">"{recipe.note}"</p>}
-              
-              {/* Delete button using delete-btn class */}
-              <button className="delete-btn" onClick={() => deleteRecipe(recipe._id)}>
-                🗑️ Delete
-              </button>
+            <div key={recipe._id} className="recipe-card">
+              <div className="card-image-container">
+                  <img src={recipe.image} alt={recipe.title} />
+              </div>
+              <div className="card-content">
+                  <h3>{recipe.title}</h3>
+                  
+                  {recipe.note && <p className="note-text">"{recipe.note}"</p>}
+                  
+                  <button className="delete-btn" onClick={() => deleteRecipe(recipe._id)}>🗑️ Delete</button>
+              </div>
             </div>
           ))
         )}
